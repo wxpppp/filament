@@ -67,6 +67,16 @@ if (UNIX AND NOT APPLE AND NOT ANDROID AND NOT WEBGL)
     set(LINUX TRUE)
 endif()
 
+if (LINUX)
+    execute_process(COMMAND uname -p
+        OUTPUT_VARIABLE PROCESSOR_ARCH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    if ("${PROCESSOR_ARCH}" STREQUAL "aarch64")
+        set(LINUX_AARCH64 TRUE)
+    endif()
+endif()
+
 if (ANDROID OR WEBGL OR IOS OR FILAMENT_USE_SWIFTSHADER)
     set(IS_MOBILE_TARGET TRUE)
 endif()
@@ -222,7 +232,7 @@ endif()
 
 if (LINUX)
     option(USE_STATIC_LIBCXX "Link against the static runtime libraries." ON)
-    if (${USE_STATIC_LIBCXX}) 
+    if (${USE_STATIC_LIBCXX})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
         link_libraries("-static-libgcc -static-libstdc++")
         link_libraries(libc++.a)
