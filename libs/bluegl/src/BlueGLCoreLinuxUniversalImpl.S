@@ -16,6 +16,8 @@
 
 #if defined(__aarch64__)
 #   include "BlueGLCoreLinuxAArch64Impl.S"
+#elif defined(__loongarch64)
+#   include "BlueGLCoreLinuxLoongArch64Impl.S"
 #else
 #   include "BlueGLCoreLinuxImpl.S"
 #endif
